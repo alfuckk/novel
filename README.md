@@ -77,4 +77,30 @@ Feature:
     ├── client.go
     └── [other client]test
         └── client.go
+
+- your-project-name
+  - cmd
+    - service1
+      - main.go
+    - service2
+      - main.go
+  - internal
+    - service1
+      - service1.go
+      - endpoint.go
+      - transport.go
+      - handler.go
+    - service2
+      - service2.go
+      - endpoint.go
+      - transport.go
+      - handler.go
+  - pkg
+    - middleware
+      - middleware1.go
+      - middleware2.go
+  - api
+    - router.go
+  - go.mod
+  - go.sum
 ```
