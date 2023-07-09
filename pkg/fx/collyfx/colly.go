@@ -3,8 +3,8 @@ package collyfx
 import (
 	"log"
 
-	"github.com/gocolly/colly/extensions"
 	"github.com/gocolly/colly/v2"
+	"github.com/gocolly/colly/v2/extensions"
 )
 
 // ProvideColly to fx
