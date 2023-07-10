@@ -1,52 +1,34 @@
 package miniofx
 
 import (
-	"context"
-
 	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
 	"go.uber.org/fx"
 )
 
-type MinIOServiceImpl struct {
-	client *minio.Client
+type Params struct {
+	fx.In
+
+	Endpoint  string
+	AccessKey string
+	SecretKey string
+	UseSSL    bool
 }
 
-// Define your service interface and implementation
-type MinIOService interface {
-	UploadFile(bucketName, objectName, filePath string) error
+type Result struct {
+	fx.Out
+
+	Client *minio.Client
 }
 
-
-func NewMinIOClient() (*minio.Client, error) {
-	// Create and configure the MinIO client
-	client, err := minio.New("minio.example.com", &minio.Options{
-		Region: "",
+func New(p Params) (Result, error) {
+	client, err := minio.New(p.Endpoint, &minio.Options{
+		Creds:  credentials.NewStaticV4(p.AccessKey, p.SecretKey, ""),
+		Secure: p.UseSSL,
 	})
 	if err != nil {
-		return nil, err
+		return Result{}, err
 	}
-	return client, nil
-}
 
-func NewMinIOService(client *minio.Client) MinIOService {
-	return &MinIOServiceImpl{
-		client: client,
-	}
-}
-
-// Define your application module
-func NewMinIOModule() fx.Option {
-	return fx.Options(
-		fx.Provide(NewMinIOClient),
-		fx.Provide(NewMinIOService),
-	)
-}
-
-func (s *MinIOServiceImpl) UploadFile(bucketName, objectName, filePath string) error {
-	// Implement the file upload logic using the MinIO client
-	_,err := s.client.FPutObject(context.Background(), bucketName, objectName, filePath, minio.PutObjectOptions{})
-	if err != nil {
-		return err
-	}
-	return nil
+	return Result{Client: client}, nil
 }
