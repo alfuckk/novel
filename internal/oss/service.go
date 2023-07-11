@@ -2,8 +2,6 @@ package oss
 
 import (
 	"context"
-
-	"go.uber.org/fx"
 )
 
 type Service interface {
@@ -21,7 +19,3 @@ func (s *service) GetUser(ctx context.Context, id string) (string, error) {
 func NewService() Service {
 	return &service{}
 }
-
-var OssModule = fx.Options(
-	fx.Provide(NewService), // NewService is a function that returns an instance of Service
-)

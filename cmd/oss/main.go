@@ -17,7 +17,7 @@ func main() {
 	app := fx.New(
 		miniofx.MinioModule,
 		ginfx.GinModule,
-		oss.OssModule,
+		oss.Module,
 		knadhfx.ConfigModule,
 		logfx.LogModule,
 		fx.Invoke(oss.Register),
