@@ -1,0 +1,3 @@
+oss:
+  port: ":9000"
+  name:  "novel-oss"
