@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package myapp;
+
+service MyService {
+	rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+}
+
+message GetUserRequest {
+	string id = 1;
+}
+
+message GetUserResponse {
+	string name = 1;
+}
