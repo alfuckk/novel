@@ -18,7 +18,7 @@ func NewHTTPHandler(endpoints endpoint.Endpoints, logger log.Logger) http.Handle
 
 func makeFputHandler(endpoints endpoint.Endpoints, logger log.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		request := endpoint.EchoRequest{S: c.Query("s")}
+		request := endpoint.FPutObjectRequest{S: c.Query("s")}
 		response, err := endpoints.FPutObject(c, request)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
