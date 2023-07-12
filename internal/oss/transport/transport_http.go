@@ -9,15 +9,17 @@ import (
 )
 
 func NewHTTPHandler(endpoints endpoint.Endpoints, logger log.Logger) http.Handler {
+	gin.SetMode(gin.ReleaseMode)
+
 	r := gin.Default()
-	r.GET("/echo", makeEchoHandler(endpoints, logger))
+	r.GET("/fput", makeFputHandler(endpoints, logger))
 	return r
 }
 
-func makeEchoHandler(endpoints endpoint.Endpoints, logger log.Logger) gin.HandlerFunc {
+func makeFputHandler(endpoints endpoint.Endpoints, logger log.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		request := endpoint.EchoRequest{S: c.Query("s")}
-		response, err := endpoints.Echo(c, request)
+		response, err := endpoints.FPutObject(c, request)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
