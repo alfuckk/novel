@@ -3,7 +3,7 @@ package logfx
 import (
 	"os"
 
-	"github.com/go-kit/log"
+	kitlog "github.com/go-kit/log"
 
 	"go.uber.org/fx"
 )
@@ -11,10 +11,9 @@ import (
 type Params struct {
 	fx.In
 
-	Logger log.Logger
+	Logger kitlog.Logger
 }
 
-var LogModule = fx.Provide(func() log.Logger {
-	logger := log.NewLogfmtLogger(os.Stderr)
-	return logger
+var LogModule = fx.Provide(func() kitlog.Logger {
+	return kitlog.NewJSONLogger(kitlog.NewSyncWriter(os.Stdout))
 })
