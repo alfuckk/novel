@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"path"
 	"strconv"
 	"time"
@@ -26,6 +27,7 @@ type service struct {
 	Client     *minio.Client
 	OssGateway string
 	Log        log.Logger
+	UseSSL     bool
 }
 
 func (s service) Fput(ctx context.Context, bucketName, tmpPath, contentType string) (imageURL string, err error) {
@@ -36,7 +38,11 @@ func (s service) Fput(ctx context.Context, bucketName, tmpPath, contentType stri
 		s.Log.Log("upload %s failed: %v", err)
 		return "", err
 	}
-	imageURL = "https://" + s.OssGateway + "/" + bucketName + "/" + objectName
+	if s.UseSSL {
+		imageURL = fmt.Sprintf("https://%s/%s/%s", s.OssGateway, bucketName, objectName)
+	} else {
+		imageURL = fmt.Sprintf("http://%s/%s/%s", s.OssGateway, bucketName, objectName)
+	}
 	return imageURL, nil
 }
 
@@ -54,5 +60,6 @@ func NewService(p Params) Service {
 		Client:     client,
 		OssGateway: p.Config.String("OSS.Endpoint"),
 		Log:        p.Logger,
+		UseSSL:     p.Config.Bool("OSS.UseSSL"),
 	}
 }
