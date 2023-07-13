@@ -1,21 +1,59 @@
 # Novel
-```
+> 一个完整的go微服务项目
 - novel
   - cmd
-    - service1
+    - oss
       - main.go
-    - service2
+    - parse
+      - main.go
+    - persistence
+      - main.go
+    - scraper
       - main.go
   - internal
-    - service1
-      - handler.go
-      - service.go
-    - service2
-      - handler.go
-      - service.go
+    - oss
+      - endpoint
+        - endpoint.go
+        - fput_endpoint.go
+      - service
+        - service.go
+      - transport
+        - transport_http.go
+      - module.go
+    - parse
+      - endpoint
+        - endpoint.go
+        - fput_endpoint.go
+      - service
+        - service.go
+      - transport
+        - transport_http.go
+      - module.go
+    - persistence
+      - endpoint
+        - endpoint.go
+        - fput_endpoint.go
+      - service
+        - service.go
+      - transport
+        - transport_http.go
+      - module.go
+    - scraper
+      - endpoint
+        - endpoint.go
+        - fput_endpoint.go
+      - service
+        - service.go
+      - transport
+        - transport_http.go
+      - module.go
   - pkg
     - middleware
-      - middleware.go
+      - auth_middleware.go
+      - log_middleware.go
+    - fx
+      - logfx
+      - knadhfx
   - go.mod
   - go.sum
   ```
