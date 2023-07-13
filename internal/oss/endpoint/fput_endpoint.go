@@ -10,15 +10,19 @@ import (
 func makeFPutObjectEndpoint(s service.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(FPutObjectRequest)
-		v := s.Echo(req.S)
-		return FPutObjectResponse{V: v}, nil
+
+		v, _ := s.Fput(ctx, req.BucketName, req.FilePath, req.ContentType)
+		return FPutObjectResponse{OssURL: v}, nil
 	}
 }
 
 type FPutObjectRequest struct {
-	S string
+	BucketName  string
+	FilePath    string
+	FileName    string
+	ContentType string
 }
 
 type FPutObjectResponse struct {
-	V string `json:"version"`
+	OssURL string `json:"ossURL"`
 }

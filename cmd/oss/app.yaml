@@ -1,3 +1,8 @@
-oss:
-  port: ":9000"
-  name:  "novel-oss"
+OSS:
+  Endpoint: s3-cdn.moutfire.com
+  AccessKey:  dwNRnDhOWjcoxw9DqPuZ
+  SecretKey:  KwqlZojKVvIfRCbwD6i9q0ogXaAPKaL1kPmrPh4k
+  UseSSL: true
+  Location: "us-east-1"
+
+Port: ":9000"
