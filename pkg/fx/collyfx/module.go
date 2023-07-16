@@ -8,7 +8,8 @@ import (
 
 // ProvideColly is a function that returns a colly collector instance
 func ProvideColly() (*colly.Collector, error) {
-	return nil, nil
+	c := colly.NewCollector()
+	return c, nil
 }
 
 // CollyModule provided to fx

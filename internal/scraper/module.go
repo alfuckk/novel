@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/go-kit/kit/log"
-	"github.com/knadh/koanf/v2"
 	"github.com/kzaun/novel/internal/scraper/service"
 
 	"go.uber.org/fx"
@@ -21,7 +20,7 @@ func Register(
 	lc fx.Lifecycle,
 	logger log.Logger,
 	s service.Service,
-	config *koanf.Koanf,
+	// config *koanf.Koanf,
 ) {
 	lc.Append(fx.Hook{
 		OnStart: func(context.Context) error {

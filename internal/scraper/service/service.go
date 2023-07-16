@@ -5,12 +5,17 @@ import (
 	"runtime"
 
 	"github.com/gocolly/colly/v2"
+	amqp "github.com/rabbitmq/amqp091-go"
+	"go.uber.org/fx"
 )
 
 type Service interface {
 	Scrape(url string) (string, error)
 }
-
+type Params struct {
+	conn *amqp.Connection
+	fx.In
+}
 type service struct {
 }
 
@@ -19,6 +24,10 @@ func (s service) Scrape(url string) (string, error) {
 	c := colly.NewCollector(
 		colly.AllowedDomains(url),
 	)
+	// amqp.
+	ch := amqp.Channel
+	fmt.Println(ch)
+	fmt.Println(c)
 	tasks := make(chan string, 100)
 	results := make(chan string, 100)
 
@@ -48,8 +57,10 @@ func (s service) Scrape(url string) (string, error) {
 	return "", nil
 }
 
-func NewService() Service {
-	return service{}
+func NewService(p Params) Service {
+	return service{
+		amqp: p.conn,
+	}
 }
 
 func processURL(url string) string {
